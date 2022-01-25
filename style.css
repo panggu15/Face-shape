@@ -8,6 +8,7 @@ body {
   line-height: 1.67;
   text-align: center;
   color: #000000;
+  margin: 2.5rem 0;
 }
 
 .subtitle {
@@ -15,6 +16,7 @@ body {
   line-height: 1.53;
   text-align: center;
   color: #000000;
+  margin: 2rem 0;
 }
 
   .file-upload {
