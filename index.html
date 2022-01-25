@@ -81,13 +81,12 @@
 
     </script>
     <script type="text/javascript">
-
+        import {loadGraphModel} from '@tensorflow/tfjs-converter';
         let model, webcam, labelContainer, maxPredictions;
         
         // Load the image model and setup the webcam
         async function init() {
 //             model = await tf.loadLayersModel('./model/model.json');
-            import {loadGraphModel} from '@tensorflow/tfjs-converter';
             model = await loadGraphModel('./model/model.json');
         }
 
