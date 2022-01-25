@@ -101,7 +101,7 @@
             var image = document.getElementById("uploaded_image")
 
             let example = tf.browser.fromPixels(image);  // for example
-            example = tf.image.resizeBilinear(example, [128,128]);
+            example = tf.image.resizeBilinear(example, [224,224]);
             example = tf.expandDims(example, 0);
             const prediction = model.predict(example);
             const predictionArray = prediction.dataSync();
