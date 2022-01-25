@@ -39,6 +39,7 @@
     <div id="webcam-container"></div>
     <div id="label-container"></div>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
     <script>
         function readURL(input) {
             if (input.files && input.files[0]) {
@@ -81,6 +82,12 @@
 
     </script>
     <script type="text/javascript">
+        // More API functions here:
+        // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+
+        // the link to your model provided by Teachable Machine export panel
+        const URL = "https://teachablemachine.withgoogle.com/models/mpfN8OhEG/";
+
         let model, webcam, labelContainer, maxPredictions;
         
         // Load the image model and setup the webcam
@@ -94,7 +101,7 @@
             var image = document.getElementById("uploaded_image")
 
             let example = tf.browser.fromPixels(image);  // for example
-            example = tf.image.resizeBilinear(example, [224,224]);
+            example = tf.image.resizeBilinear(example, [128,128]);
             example = tf.expandDims(example, 0);
             const prediction = model.predict(example);
             const predictionArray = prediction.dataSync();
