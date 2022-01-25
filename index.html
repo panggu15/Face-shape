@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Required meta tags --> 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    
+    <link rel='stylesheet' , href='style.css'>
+    <!-- <script type="text/javascript" src="model.json"></script> -->
+</head>
+
+<body>
+    <div>Teachable Machine Image Model</div>
+    <button type="button" onclick="init()">Start</button>
+    <button type="button" onclick="predict()">예측</button>
+    <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <section class="section">
+        <h1 class="title">제목 입니당.</h1>
+        <h2 class="subtitle">이곳이 부제목이란 건에 </h2>
+    </section>
+    
+    <div class="container file-upload">
+        
+        <div class="image-upload-wrap">
+            <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+            <div class="drag-text">
+                <h3 class="pt-3 upload-text">클릭 후 사진 업로드</h3>
+                <img class="file-upload-image" id="uploaded_image" src="업로드.svg" style="width: 13vw; height: 13vw;" alt="업로드">
+            </div>
+        </div>
+        <div class="file-upload-content">
+            <div class="image-title-wrap">
+                <button type="button" onclick="removeUpload()" class="remove-image">다른 사진으로 재시도</button>
+            </div>
+        </div>
+    </div>
+    <div id="webcam-container"></div>
+    <div id="label-container"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.upload-text').hide();
+                    $('.file-upload-image').attr('src', e.target.result);
+                    $('.file-upload-content').show();
+                    $('.file-upload-image').attr('style', "width:100%; height:100%;");
+                    
+                };
+
+                reader.readAsDataURL(input.files[0]);
+                
+                init().then(function () {
+                    predict();
+                })
+
+
+            } else {
+                removeUpload();
+            }
+        }
+
+        function removeUpload() {
+            $('.file-upload-image').attr("src", "업로드.svg");
+            $('.file-upload-image').attr('style', "width: 13vw; height: 13vw;");
+            $('.upload-text').show();
+            $('.file-upload-content').hide();
+            $('.image-upload-wrap').show();
+        }
+        $('.image-upload-wrap').bind('dragover', function () {
+            $('.image-upload-wrap').addClass('image-dropping');
+        });
+        $('.image-upload-wrap').bind('dragleave', function () {
+            $('.image-upload-wrap').removeClass('image-dropping');
+        });
+
+    </script>
+    <script type="text/javascript">
+        // More API functions here:
+        // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+
+        // the link to your model provided by Teachable Machine export panel
+        const URL = "https://teachablemachine.withgoogle.com/models/mpfN8OhEG/";
+
+        let model, webcam, labelContainer, maxPredictions;
+        
+        // Load the image model and setup the webcam
+        async function init() {
+            model = await tf.loadLayersModel('./model/model.json');
+        }
+
+        // run the webcam image through the image model
+        async function predict() {
+            // predict can take in an image, video or canvas html element
+            var image = document.getElementById("uploaded_image")
+
+            let example = tf.browser.fromPixels(image);  // for example
+            example = tf.image.resizeBilinear(example, [128,128]);
+            example = tf.expandDims(example, 0);
+            const prediction = model.predict(example);
+            const predictionArray = prediction.dataSync();
+            const maxValue = predictionArray.indexOf(Math.max(...predictionArray));
+            console.log(prediction)
+            console.log(maxValue)
+            // const prediction = await model.predict(image, false);
+            // for (let i = 0; i < maxPredictions; i++) {
+            //     const classPrediction =
+            //         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+            //     labelContainer.childNodes[i].innerHTML = classPrediction;
+            // }
+        }
+    </script>
+
+</body>
+<!-- Copyright (c) 2022 by Aaron Vanston (https://codepen.io/aaronvanston/pen/yNYOXR)
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. -->
+
+</html>
