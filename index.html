@@ -87,6 +87,7 @@
         // Load the image model and setup the webcam
         async function init() {
 //             model = await tf.loadLayersModel('./model/model.json');
+            import {loadGraphModel} from '@tensorflow/tfjs-converter';
             model = await loadGraphModel('./model/model.json');
         }
 
