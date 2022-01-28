@@ -50,6 +50,7 @@
                     $('.upload-text').hide();
                     $('.file-upload-image').attr('src', e.target.result);
                     $('.file-upload-content').show();
+                    $('.file-upload-input').hide();
                     $('.file-upload-image').attr('style', "width:100%; height:100%;");
                     
                 };
@@ -67,6 +68,7 @@
         }
 
         function removeUpload() {
+            $('.file-upload-input').show();
             $('.file-upload-image').attr("src", "업로드.svg");
             $('.file-upload-image').attr('style', "width: 13vw; height: 13vw;");
             $('.upload-text').show();
