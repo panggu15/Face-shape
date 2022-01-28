@@ -106,6 +106,7 @@ body {
   #label-container {
     text-align: center;
     margin: 15px auto;
+    display: none;
   }
 
  @media screen and (max-width: 580px) {
