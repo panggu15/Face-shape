@@ -37,8 +37,9 @@
             </div>
         </div>
     </div>
-    <div id="webcam-container"></div>
-    <div id="label-container"></div>
+    <div id="label-container">
+        <em class="result"></em>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
     <script>
         function readURL(input) {
@@ -110,12 +111,29 @@
             const maxValue = predictionArray.indexOf(Math.max(...predictionArray));
             console.log(prediction)
             console.log(maxValue)
-            // const prediction = await model.predict(image, false);
-            // for (let i = 0; i < maxPredictions; i++) {
-            //     const classPrediction =
-            //         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-            //     labelContainer.childNodes[i].innerHTML = classPrediction;
-            // }
+            switch (maxValue) {
+                case 0:
+                    result = "하트형"
+                    break;
+  
+                case 1:
+                    result = "긴얼굴"
+                    break;
+                    
+                case 2:
+                    result = "계란형"
+                    break;
+                    
+                case 3:
+                    result = "둥근형"
+                    break;
+                    
+                case 4:
+                    result = "사각형"
+                    break;
+            
+            }
+            $('.result').html(result);
         }
     </script>
 
