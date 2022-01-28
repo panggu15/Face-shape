@@ -107,4 +107,8 @@ body {
   .file-upload {
     width: 100%;
   }
+  .image-upload-wrap {
+    width: 70%;
+    margin: auto;
+  }    
 }
