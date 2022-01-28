@@ -60,6 +60,7 @@
                 
                 init().then(function () {
                     predict();
+                    $('#label-container').show();
                 })
 
 
@@ -70,6 +71,7 @@
 
         function removeUpload() {
             $('.file-upload-input').show();
+            $('#label-container').hide();
             $('.file-upload-image').attr("src", "업로드.svg");
             $('.file-upload-image').attr('style', "width: 13vw; height: 13vw;");
             $('.upload-text').show();
