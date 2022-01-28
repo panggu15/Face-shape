@@ -103,6 +103,11 @@ body {
     transition: all .2s ease;
   }
 
+  .label-container {
+    text-align: center;
+    margin: 15px auto;
+  }
+
  @media screen and (max-width: 580px) {
   .file-upload {
     width: 100%;
