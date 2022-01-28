@@ -103,7 +103,7 @@ body {
     transition: all .2s ease;
   }
 
-  .label-container {
+  #label-container {
     text-align: center;
     margin: 15px auto;
   }
